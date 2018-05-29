@@ -125,10 +125,29 @@ Module.register("MMM-Todoist", {
         if (this.tasks === undefined) {
             return table;
         }
+	
+	todoist.items.sort(function (a,b) {
+		return a.project_id - b.project_id;
+	});
 
         for (var i = 0; i < this.tasks.items.length; i++) {
             var row = document.createElement("tr");
             table.appendChild(row);
+		
+	                //ShowProject
+            if (this.config.showProject) {
+                var spacerCell2 = document.createElement("td");
+                spacerCell2.className = "spacerCell";
+                spacerCell2.innerHTML = "";
+                row.appendChild(spacerCell2);
+
+                var project = todoist.projects.find(p => p.id === todoist.items[i].project_id);
+                var projectcolor = this.config.projectColors[project.color];
+                var projectCell = document.createElement("td");
+                projectCell.className = "xsmall";
+                projectCell.innerHTML ="<span class='projectcolor2' style='color: " + projectcolor + "; background-color: " + projectcolor + "'></span>" + project.name;
+                row.appendChild(projectCell);
+            }
 
             var priorityCell = document.createElement("td");
             switch (this.tasks.items[i].priority) {
@@ -189,20 +208,6 @@ Module.register("MMM-Todoist", {
             }
             row.appendChild(dueDateCell);
 
-            //ShowProject
-            if (this.config.showProject) {
-                var spacerCell2 = document.createElement("td");
-                spacerCell2.className = "spacerCell";
-                spacerCell2.innerHTML = "";
-                row.appendChild(spacerCell2);
-
-                var project = this.tasks.projects.find(p => p.id === this.tasks.items[i].project_id);
-                var projectcolor = this.config.projectColors[project.color];
-                var projectCell = document.createElement("td");
-                projectCell.className = "xsmall";
-                projectCell.innerHTML = project.name + "<span class='projectcolor' style='color: " + projectcolor + "; background-color: " + projectcolor + "'></span>";
-                row.appendChild(projectCell);
-            }
 
             // Create fade effect by MichMich (MIT)
             if (this.config.fade && this.config.fadePoint < 1) {
