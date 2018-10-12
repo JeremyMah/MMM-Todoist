@@ -17,7 +17,7 @@ modules: [
 		config: { // See 'Configuration options' for more information.
           	accessToken: 'accessToken from Todoist',
 			maximumEntries: 60,
-			updateInterval: 60,
+			updateInterval: 10*60*1000, // Update every 10 minutes
 			projects: [ 166564794 ],
 			fade: false
       }
@@ -49,7 +49,7 @@ The following properties can be configured:
 		<tr>
 			<td><code>projects</code></td>
 			<td>
-				Array of ProjectIds you want to display. <br>
+				Array of ProjectIDs you want to display. <br>
 				<br><b>Possible values:</b> <code>array</code>
 				<br><b>Default value:</b> <code>[ ]</code>
 				<br><b>Example:</b> <code>[166564794, 166564792]</code>
@@ -65,15 +65,15 @@ The following properties can be configured:
 		<tr>
 			<td><code>maximumEntries</code></td>
 			<td>Maximum number of todos to be shown.<br>
-				<br><b>Possible values:</b> <code>time</code> in <code>min</code>
-				<br><b>Default value:</b> <code>60</code>
+				<br><b>Possible values:</b> <code>int</code>
+				<br><b>Default value:</b> <code>10</code>
 			</td>
 		</tr>
 		<tr>
 			<td><code>interval</code></td>
-			<td>How often the module should load new todos.<br>
-				<br><b>Possible values:</b> <code>int</code> in <code>seconds</code>
-				<br><b>Default value:</b> <code>60</code>
+			<td>How often the module should load new todos. Be careful, this is in ms, NOT seconds! So, too low a number will lock you out for repeated server attempts!<br>
+				<br><b>Possible values:</b> <code>int</code> in <code>milliseconds</code>
+				<br><b>Default value:</b> <code>10*60*1000</code>
 			</td>
 		</tr>
 		<tr>
@@ -97,11 +97,51 @@ The following properties can be configured:
 				<br><b>Default value:</b> <code>true</code>
 			</td>
 		</tr>
+		<tr>
+			<td><code>sortType</code></td>
+			<td>This will determine the sorting method used when displaying your Todos.<br>
+				<br><b>Possible values:</b> <br />
+				<code>"todoist"</code> <span>- Sort based on the order in Todoist.</span> </br >
+				<code>"dueDateAsc"</code> <span>- Sort based on the Due Date of the Todo Ascending. (Oldest date first)</span> </br>
+				<code>"dueDateDesc"</code> <span>- Sort based on the Due Date of the Todo Descending. (Newest date first)</span></br>
+				<br><b>Default value:</b> <code>"todoist"</code>
+			</td>
+		</tr>
+
+
+
+
+
 	</tbody>
 </table>
 
 ## Dependencies
 - [request](https://www.npmjs.com/package/request) (installed via `npm install`)
+
+
+# Screen shots
+A few sample Screen Shots to show you what this module looks like. It's fairly configurable and changes considerably depending on how you use Todoist, how many projects you include, and how you sort.  
+
+Options enabled: orderBy:todoist, showProjects: true
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/1.png)  
+
+Options enabled: orderBy:dueDateAsc, showProjects: true
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/2.png)  
+
+Options enabled: orderBy:dueDateAsc, showProjects: false
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/3.png)  
+
+Options enabled: orderBy:todoist, showProjects: false
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/4.png)  
+
+Options enabled: orderBy:todoist, showProjects: true
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/5.png)  
+
+Options enabled: orderBy:dueDateAsc, showProjects: true
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/6.png)  
+
+Options enabled: orderBy:dueDateAsc, showProjects: false
+![My image](http://cbrooker.github.io/MMM-Todoist/Screenshots/7.png)  
 
 
 ##Attribution
